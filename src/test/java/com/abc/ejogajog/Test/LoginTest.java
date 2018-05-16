@@ -1,6 +1,8 @@
 package com.abc.ejogajog.Test;
 
-import org.openqa.selenium.By;
+import static org.testng.Assert.assertEquals;
+
+//import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.Test;
 
@@ -11,22 +13,24 @@ public class LoginTest {
 	
 	private WebDriver driver = null;
 	
-	@Test
+	@Test(priority=1, description="Launches the site")
 	public void testLoginPageTitleCheck() {
 		
 		driver = DriverManager.driver;
 		driver.get(URLTextUtils.LoginPage.BASE_URL);
+		assertEquals(driver.getTitle(), URLTextUtils.LoginPage.LOGIN_TEST_TITLE);
+		System.out.println("Checked- Login page title verification successful");
 		
 	}
 	
-	@Test
-	public void testInvalidLogin() {
-		
-	}
+//	@Test
+//	public void testInvalidLogin() {
+//		
+//	}
 	
-	@Test
-	public void testValidLogin() {
-		
-	}
+//	@Test
+//	public void testValidLogin() {
+//		
+//	}
 	
 }
