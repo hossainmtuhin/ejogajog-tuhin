@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.testng.annotations.Test;
 
 import com.abc.ejogajog.Utils.DriverManager;
+import com.abc.ejogajog.Utils.URLTextUtils;
 
 public class LoginTest {
 	
@@ -14,6 +15,8 @@ public class LoginTest {
 	public void testLoginPageTitleCheck() {
 		
 		driver = DriverManager.driver;
+		driver.get(URLTextUtils.LoginPage.BASE_URL);
+		
 	}
 	
 	@Test
