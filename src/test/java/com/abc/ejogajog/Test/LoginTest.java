@@ -5,6 +5,7 @@ import static org.testng.Assert.assertEquals;
 import org.openqa.selenium.By;
 //import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
 
 import com.abc.ejogajog.Utils.DriverManager;
@@ -20,6 +21,7 @@ public class LoginTest {
 		
 		driver = DriverManager.driver;
 		driver.get(URLTextUtils.LoginPage.BASE_URL);
+		driver.manage().window().maximize(); //maximize window
 		assertEquals(driver.getTitle(), URLTextUtils.LoginPage.LOGIN_TEST_TITLE);
 		System.out.println("Checked- Login page title verification successful");		
 	}
@@ -27,7 +29,8 @@ public class LoginTest {
 	@Test(description="Test Email, Password and Login are present")
 	public void testFormText() {
 		//check for the login form headers
-		assertEquals(driver.findElement(By.xpath("html/body/div/div[2]/div[2]/div/h2")).getText(), "Log in(beta).");
+		String pageTitle = driver.findElement(By.xpath(XPathUtils.Login.PAGE_TITLE)).getText();
+		assertEquals(pageTitle, "Log in(beta).");
 		assertEquals(driver.findElement(By.xpath("//*[@id='loginForm']/form/h4")).getText(), "Use an account to log in.");
 		
 		//check for field labels
@@ -74,5 +77,10 @@ public class LoginTest {
 	@Test(description="check the map is showing on the page")
 	public void checkMap() {
 		
+	}
+	
+	@AfterClass
+	public void tearDown() throws Exception {
+		driver.quit();
 	}
 }
