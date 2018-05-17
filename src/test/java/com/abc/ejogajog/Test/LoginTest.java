@@ -23,7 +23,8 @@ public class LoginTest {
 		driver.get(URLTextUtils.LoginPage.BASE_URL);
 		driver.manage().window().maximize(); //maximize window
 		assertEquals(driver.getTitle(), URLTextUtils.LoginPage.LOGIN_TEST_TITLE);
-		System.out.println("Checked- Login page title verification successful");		
+		System.out.println("Checked- Login page title verification successful");	
+		System.out.println(driver);
 	}
 	
 	@Test(description="Test Email, Password and Login are present")
@@ -74,10 +75,10 @@ public class LoginTest {
 		assertEquals(driver.getTitle(), "Ejogajog");
 	}
 	
-	@Test(description="check the map is showing on the page")
-	public void checkMap() {
-		
-	}
+//	@Test(description="check the map is showing on the page")
+//	public void checkMap() {
+//		
+//	}
 	
 	@AfterClass
 	public void tearDown() throws Exception {
