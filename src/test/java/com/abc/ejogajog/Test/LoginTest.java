@@ -14,14 +14,14 @@ import com.abc.ejogajog.Utils.XPathUtils;
 
 public class LoginTest {
 	
-	private WebDriver driver = null;
+	public static WebDriver driver; 
 	
 	@Test(alwaysRun = true, description="Launches the site and check title")
 	public void testLoginPageTitleCheck() throws Exception{
-		
+			
 		driver = DriverManager.driver;
-		driver.get(URLTextUtils.LoginPage.BASE_URL);
 		driver.manage().window().maximize(); //maximize window
+		driver.get(URLTextUtils.LoginPage.BASE_URL);
 		assertEquals(driver.getTitle(), URLTextUtils.LoginPage.LOGIN_TEST_TITLE);
 		System.out.println("Checked- Login page title verification successful");	
 		System.out.println("driver: " +driver);
@@ -30,7 +30,9 @@ public class LoginTest {
 	@Test(description="Test Email, Password and Login are present")
 	public void testFormText() {
 		//check for the login form headers
-		String pageTitle = driver.findElement(By.cssSelector(".col-xs-12.col-sm-6.col-md-5.col-lg-4>div>h2")).getText();
+		driver = DriverManager.driver;
+		String pageTitle = driver.findElement(By.xpath("//div[@class='row vertical-align']//div/h2")).getText();
+		System.out.println(pageTitle);
 		assertEquals(pageTitle, "Log in(beta).");
 		assertEquals(driver.findElement(By.xpath("//*[@id='loginForm']/form/h4")).getText(), "Use an account to log in.");
 		
@@ -50,6 +52,7 @@ public class LoginTest {
 	
 	@Test(description="Invalid login credentials and check the error messages")
 	public void testInvalidLogin() {
+		driver = DriverManager.driver;
 		//invalid email type
 		driver.findElement(By.xpath("//*[@id='Email']")).sendKeys("asdf");
 		driver.findElement(By.xpath("//*[@id='loginForm']/form/div[3]/div/input")).click();
@@ -68,6 +71,7 @@ public class LoginTest {
 	@Test(description="successful login with correct credentials")
 	public void testValidLogin() {
 		
+		driver = DriverManager.driver;
 		driver.findElement(By.xpath("//*[@id='Email']")).sendKeys("testuser1@gmail.com");
 		driver.findElement(By.xpath("//*[@id='Password']")).sendKeys("1qazXSW@");
 		
