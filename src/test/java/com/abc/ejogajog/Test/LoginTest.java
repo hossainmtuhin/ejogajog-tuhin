@@ -24,13 +24,13 @@ public class LoginTest {
 		driver.manage().window().maximize(); //maximize window
 		assertEquals(driver.getTitle(), URLTextUtils.LoginPage.LOGIN_TEST_TITLE);
 		System.out.println("Checked- Login page title verification successful");	
-		System.out.println(driver);
+		System.out.println("driver: " +driver);
 	}
 	
 	@Test(description="Test Email, Password and Login are present")
 	public void testFormText() {
 		//check for the login form headers
-		String pageTitle = driver.findElement(By.xpath(XPathUtils.Login.PAGE_TITLE)).getText();
+		String pageTitle = driver.findElement(By.cssSelector(".col-xs-12.col-sm-6.col-md-5.col-lg-4>div>h2")).getText();
 		assertEquals(pageTitle, "Log in(beta).");
 		assertEquals(driver.findElement(By.xpath("//*[@id='loginForm']/form/h4")).getText(), "Use an account to log in.");
 		
