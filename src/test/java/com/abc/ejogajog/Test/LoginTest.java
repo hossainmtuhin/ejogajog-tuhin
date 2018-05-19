@@ -2,7 +2,14 @@ package com.abc.ejogajog.Test;
 
 import static org.testng.Assert.assertEquals;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
+
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 //import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterClass;
@@ -22,12 +29,13 @@ public class LoginTest {
 		driver = DriverManager.driver;
 		driver.manage().window().maximize(); //maximize window
 		driver.get(URLTextUtils.LoginPage.BASE_URL);
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		assertEquals(driver.getTitle(), URLTextUtils.LoginPage.LOGIN_TEST_TITLE);
 		System.out.println("Checked- Login page title verification successful");	
 		System.out.println("driver: " +driver);
 	}
 	
-	@Test(description="Test Email, Password and Login are present")
+//	@Test(description="Test Email, Password and Login are present")
 	public void testFormText() {
 		//check for the login form headers
 		driver = DriverManager.driver;
@@ -41,21 +49,14 @@ public class LoginTest {
 		assertEquals(driver.findElement(By.xpath(XPathUtils.Login.USER_NAME_LABEL)).getText(), "Email");
 		assertEquals(driver.findElement(By.xpath(XPathUtils.Login.PASSWORD_LABEL)).getText(), "Password");
 		
-		//check for login button
-		boolean loginButtonIsPresent = driver.findElement(By.xpath(XPathUtils.Login.BTN_LOGIN)).isDisplayed();
-	    if(loginButtonIsPresent==true){
-	    	System.out.println("Log in button is present");
-	    } else {
-	    	System.out.println("Log in button isn't present");
-	    }
 	}
 	
-	@Test(description="Invalid login credentials and check the error messages")
+//	@Test(description="Invalid login credentials and check the error messages")
 	public void testInvalidLogin() {
 		driver = DriverManager.driver;
 		//invalid email type
 		driver.findElement(By.xpath("//*[@id='Email']")).sendKeys("asdf");
-		driver.findElement(By.xpath("//*[@id='loginForm']/form/div[3]/div/input")).click();
+		driver.findElement(By.xpath(XPathUtils.Login.BTN_LOGIN)).click();
 		
 		String msg1 = driver.findElement(By.xpath("//*[@id='loginForm']/form/div[1]/div/span/span")).getText();
 		assertEquals(msg1, "The Email field is not a valid e-mail address.");
@@ -63,7 +64,7 @@ public class LoginTest {
 		//invalid email id and password
 		driver.findElement(By.xpath("//*[@id='Email']")).sendKeys("asdf@gmail.com");
 		driver.findElement(By.xpath("//*[@id='Password']")).sendKeys("asdf");
-		
+		driver.findElement(By.xpath(XPathUtils.Login.BTN_LOGIN)).click();
 		String msg2 = driver.findElement(By.xpath("//*[@id='loginForm']/form/div[1]/ul/li")).getText();
 		assertEquals(msg2, "Invalid login attempt.");	
 	}
@@ -74,15 +75,21 @@ public class LoginTest {
 		driver = DriverManager.driver;
 		driver.findElement(By.xpath("//*[@id='Email']")).sendKeys("testuser1@gmail.com");
 		driver.findElement(By.xpath("//*[@id='Password']")).sendKeys("1qazXSW@");
+		driver.findElement(By.xpath(XPathUtils.Login.BTN_LOGIN)).click();
 		
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		//if login was successful, following should be true
 		assertEquals(driver.getTitle(), "Ejogajog");
 	}
 	
-//	@Test(description="check the map is showing on the page")
-//	public void checkMap() {
-//		
-//	}
+	@Test(description="check the map is showing on the page")
+	public void checkMap() throws IOException {
+		
+		driver = DriverManager.driver;
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		File srcFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+		FileUtils.copyFile(srcFile, new File("F:\\automation_\\_projects\\ejogajog-tuhin\\image\\screenshot_" + System.currentTimeMillis()+ ".png"));
+	}
 	
 	@AfterClass
 	public void tearDown() throws Exception {
