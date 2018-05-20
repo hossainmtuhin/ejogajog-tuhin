@@ -13,3 +13,8 @@ Steps: For Importing a new project and environment setup>
 4.	Extract the zip file and add JARs to the project (project> build path> configure build path).
 5.	Download geckodriver (https://github.com/mozilla/geckodriver/releases ) and place the file location inside code.
 6.	Run the Suite.xml file (Run as> select TestNG Suite)
+
+Download apache commons io jars: 
+http://commons.apache.org/proper/commons-io/index.html
+
+
