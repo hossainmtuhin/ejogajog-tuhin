@@ -22,7 +22,7 @@ public class CheckMap {
 		driver = DriverManager.driver;
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		File srcFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-		FileUtils.copyFile(srcFile, new File("F:\\automation_\\_projects\\ejogajog-tuhin\\image\\screenshot_" + System.currentTimeMillis()+ ".jpg"));
+		FileUtils.copyFile(srcFile, new File("D:\\_automation\\image\\screenshot_" + System.currentTimeMillis()+ ".jpg"));
 				
 	}
 		
